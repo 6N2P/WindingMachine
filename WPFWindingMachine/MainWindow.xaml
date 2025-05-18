@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Winding machine" Height="450" Width="800">
+        Title="Winding machine" Height="450" Width="800"
+        Background="#C7D7FC">
     <Window.Resources>
         <ObjectDataProvider ObjectType="{x:Type ports:SerialPort}" 
                             MethodName="GetPortNames" 
@@ -21,47 +22,75 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
                     Margin="5">
+            <Border CornerRadius="5"
+                    Background="#729CFC">
+                <StackPanel Orientation="Vertical"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center">
 
-            <Button x:Name="bt_conect"
-                    Content ="{Binding ConnectionFlag}"
-                    Margin="5" 
-                    Command="{Binding ConnectionToPortCommand}"/>
+                    <Button x:Name="bt_conect"
+                             Style="{StaticResource toolBarButton}"
+                             Content ="{Binding ConnectionFlag}"
+                             Command="{Binding ConnectionToPortCommand}"/>
 
-            <Button x:Name="bt_ubdateList"
-                    Content="Обновить список"
-                    Margin="5" 
-                    Command="{Binding GetPortsListCommand}"/>
+                    <Button x:Name="bt_ubdateList"
+                             Content="Обновить список"
+                             Style="{StaticResource toolBarButton}"
+                             Command="{Binding GetPortsListCommand}"/>
 
-            <ComboBox x:Name="cbPorts"
-                      ItemsSource="{Binding PortsList}"
-                      SelectedItem="{Binding SelectedPort}"
-                      IsEnabled="{Binding IsEnabledActivCBPorts}"/>
+                    <ComboBox x:Name="cbPorts"
+                               Margin="5"
+                               ItemsSource="{Binding PortsList}"
+                               SelectedItem="{Binding SelectedPort}"
+                               IsEnabled="{Binding IsEnabledActivCBPorts}"/>
 
-            <TextBlock Text="Задать шаг свободного"
-            Height="20"/>
-
-            <TextBox x:Name="tStep"
-                     Margin="5"
-                     Height="20"
-                     Text="{Binding StepsFreeMove}"/>
-
-            <Button Content="Задать шаг"
-                    Height="20"
-                    Command="{Binding SetStepsFreeMoveCommand}"/>
+                </StackPanel>
+            </Border>
             
-            <Button Content="Двигать"/>
-            
-            <StackPanel Orientation="Horizontal">
-                <Button Margin="5"
-                        Content="по час"
-                        Command="{Binding Set1DirectionMotorCommand}"/>
-                
-                <Button Margin="5"
-                        Content="против час"
-                        Command="{Binding Set2DirectionMotorCommand}"/>
-            </StackPanel>
+            <Border Margin="0,10"
+                    CornerRadius="5"
+                    Background="#729CFC">
+                <StackPanel Orientation="Vertical"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="Задать шаг свободного"
+                             Style="{StaticResource MyTextLight}"/>
+
+                    <TextBox x:Name="tStep"
+                             Margin="5"
+                             Height="20"
+                             Text="{Binding StepsFreeMove}"/>
+
+                    <Button Content="Задать шаг"
+                            Style="{StaticResource toolBarButton}"
+                            Command="{Binding SetStepsFreeMoveCommand}"/>
+                    
+                    <TextBlock Text="Текущий шаг: "
+                              Style="{StaticResource MyTextLight}"/>
+                    <StackPanel Orientation="Horizontal"
+                                 HorizontalAlignment="Center">
+                        <Button Style="{StaticResource toolBarButton}"
+                                 Width="50"
+                                 FontSize="10"
+                                 Content="по час"
+                                 Command="{Binding Set1DirectionMotorCommand}"/>
+
+                        <Button Style="{StaticResource toolBarButton}"
+                                Content="против час"
+                                Width="70"
+                                FontSize="10"
+                                Command="{Binding Set2DirectionMotorCommand}"/>
+                    </StackPanel>
+                    <Button Content="Двигать"
+                             Style="{StaticResource toolBarButton}"/>
+
+                    
+                </StackPanel>
+            </Border>
+          
             
             <TextBlock x:Name="tb_text"
+                       Style="{StaticResource MyTextDark}"
                      Text="{Binding TextCountWinding}"/>
 
         </StackPanel>
