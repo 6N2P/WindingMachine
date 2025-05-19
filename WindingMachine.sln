@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFWindingMachine", "WPFWindingMachine\WPFWindingMachine.csproj", "{48E5206E-4F1E-4AB3-A8E6-6A9D1021EC90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindingModels", "WindingModels\WindingModels.csproj", "{2B6BE6AC-C1D0-44B3-ACCB-B6D2CF2AB3CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{48E5206E-4F1E-4AB3-A8E6-6A9D1021EC90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48E5206E-4F1E-4AB3-A8E6-6A9D1021EC90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48E5206E-4F1E-4AB3-A8E6-6A9D1021EC90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B6BE6AC-C1D0-44B3-ACCB-B6D2CF2AB3CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B6BE6AC-C1D0-44B3-ACCB-B6D2CF2AB3CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B6BE6AC-C1D0-44B3-ACCB-B6D2CF2AB3CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B6BE6AC-C1D0-44B3-ACCB-B6D2CF2AB3CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
+using WpfApp1.Views;
 
 namespace WpfApp1.ViewModels
 {
@@ -21,6 +17,8 @@ namespace WpfApp1.ViewModels
             IsRotateLeft = true;
             IsRotateRight = true;
             IsEnabledActivCBPorts = true;
+
+            WindingUC = new WindingUserControl();
         }
 
    
@@ -39,6 +37,18 @@ namespace WpfApp1.ViewModels
         private bool _isRotateRight;
 
         #region Propertys
+
+        private WindingUserControl _windingUC;
+           public WindingUserControl WindingUC
+        {
+            get => _windingUC;
+            set
+            {
+                _windingUC = value;
+                OnPropertyChanged(nameof(WindingUC));
+            }
+        }
+
         public bool IsRotateLeft
         {
             get => _isRotateLeft;
@@ -223,7 +233,7 @@ namespace WpfApp1.ViewModels
             {
                 _serialPort.Close();
                 IsEnabledActivCBPorts = true;
-                ConnectionFlag = "Подключиться";
+                ConnectionFlag = "Подключиться";           
             }
             catch (Exception ex)
             {
@@ -240,6 +250,9 @@ namespace WpfApp1.ViewModels
                 _serialPort.Open();
                 IsEnabledActivCBPorts = false;
                 ConnectionFlag = "Отключиться";
+
+                if (WindingUC != null)
+                    WindingUC.SerialPort = _serialPort;
             }
             catch (Exception ex)
             {

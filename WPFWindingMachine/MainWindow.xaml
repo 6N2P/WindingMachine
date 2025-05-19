@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:uc="clr-namespace:WpfApp1.Views"
         
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
@@ -115,27 +116,7 @@
                     Margin="5">
             <TabItem Header="Намотка">
                 <Grid Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                       
-                        
-                       
-
-                       
-                    </Grid>
+                    <ContentControl Content="{Binding WindingUC}"/>
                 </Grid>
             </TabItem>
         </TabControl>
