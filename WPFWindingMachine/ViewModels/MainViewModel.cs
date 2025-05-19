@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,9 @@ namespace WpfApp1.ViewModels
             _serialPort.DataReceived += GetData;
             StepsFreeMove = 100;
             ConnectionFlag = "Подключиться";
+            IsRotateLeft = true;
+            IsRotateRight = true;
+            IsEnabledActivCBPorts = true;
         }
 
    
@@ -31,8 +35,29 @@ namespace WpfApp1.ViewModels
         private List<string> _portsList;
         private string _connectionFlag;
         private bool _isEnabledactivCBPorts;
+        private bool _isRotateLeft;
+        private bool _isRotateRight;
 
         #region Propertys
+        public bool IsRotateLeft
+        {
+            get => _isRotateLeft;
+            set
+            {
+                _isRotateLeft = value;
+                OnPropertyChanged(nameof(IsRotateLeft));
+            }
+        }
+
+        public bool IsRotateRight
+        {
+            get => _isRotateRight;
+            set
+            {
+                _isRotateRight = value;
+                OnPropertyChanged(nameof(IsRotateRight));
+            }
+        }
         public bool IsEnabledActivCBPorts
         {
             get=>_isEnabledactivCBPorts;
@@ -121,7 +146,23 @@ namespace WpfApp1.ViewModels
                 {
                     if (_serialPort.IsOpen)
                     {
-                        string command = $"STEPS:{StepsFreeMove}\n"; // \n — конец строки для Arduino
+                       // string command = $"STEPS:{StepsFreeMove}\n"; // \n — конец строки для Arduino
+                        string command = $"STEPS_FREE:{StepsFreeMove}\n"; // \n — конец строки для Arduino
+                        _serialPort.Write(command);
+                    }
+                }));
+            }
+        }
+        private DelegateCommand _muveFreeMotorCommand;
+        public DelegateCommand MuveFreeMotorCommand
+        {            
+            get
+            {
+                return _muveFreeMotorCommand ?? (_muveFreeMotorCommand = new DelegateCommand(obj =>
+                {
+                    if (_serialPort.IsOpen)
+                    {
+                        string command = "MUVE_FREE\n";
                         _serialPort.Write(command);
                     }
                 }));
@@ -137,6 +178,8 @@ namespace WpfApp1.ViewModels
                     if (_serialPort.IsOpen)
                     {
                         _serialPort.Write("B\n");
+                        IsRotateRight = false;
+                        IsRotateLeft = true;
                     }
                 }));
             }
@@ -151,6 +194,8 @@ namespace WpfApp1.ViewModels
                     if (_serialPort.IsOpen)
                     {
                         _serialPort.Write("F\n");
+                        IsRotateRight = true;
+                        IsRotateLeft = false;
                     }
                 }));
             }
@@ -209,11 +254,13 @@ namespace WpfApp1.ViewModels
 
             if (ports.Length > 0)
             {
-                PortsList = new List<string>();
+               var portsList = new List<string>();
                 foreach (string port in ports)
                 {
-                    PortsList.Add(port);
+                    portsList.Add(port);
                 }
+
+                PortsList = portsList;
                 SelectedPort = PortsList[0];
             }
         }
