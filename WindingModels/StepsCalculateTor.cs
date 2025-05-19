@@ -8,11 +8,10 @@ namespace WindingModels
 {
     public class StepsCalculateTor : StepsCalculateBase
     {
-        public StepsCalculateTor(double wireDiameter, int stepsMotor) : base(wireDiameter, stepsMotor)
+        public StepsCalculateTor(double wireDiameter, int stepsMotor, double innerDiametr) : base(wireDiameter, stepsMotor, innerDiametr)
         {
         }
-      
-        public double InnerDiametrTor {  get; set; }
+
         public override int CalculateSteps()
         {
             throw new NotImplementedException();

@@ -44,6 +44,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StepsCalculateTor.cs" />
     <Compile Include="StepsCalculateBase.cs" />
+    <Compile Include="WindingData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
