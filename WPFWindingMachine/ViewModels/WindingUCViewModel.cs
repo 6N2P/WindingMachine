@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO.Ports;
 using WindingModels;
 
@@ -12,19 +13,30 @@ namespace WpfApp1.ViewModels
             WireDiameter = 0.08;
             InnerDiametrTor = 50;
             KoefStep = 1;
-            _stepsCalculate = new StepsCalculateTor(WireDiameter,800,InnerDiametrTor);
-            
+
+            CountTurns = 2;
         }
 
 
-        private StepsCalculateBase _stepsCalculate;
+        private ICalculateSteps _stepsCalculate;
         private double _wireDiameter; //диамет провода
         private double _innerDiametrTor;
         private int _windingStep;
         private double _koefStep;
         private int _corentStep;
         private ObservableCollection<WindingData> _windingList;
+        private int _countTurns;
 
+
+        public int CountTurns
+        {
+            get=>_countTurns;
+            set
+            {
+                _countTurns = value;
+                OnPropertyChanged(nameof(CountTurns));
+            }
+        }
         private ObservableCollection<WindingData> WindingList
         {
             get => _windingList;
@@ -70,8 +82,12 @@ namespace WpfApp1.ViewModels
             get => _innerDiametrTor;
             set
             {
-                _innerDiametrTor = value;
-                OnPropertyChanged(nameof(InnerDiametrTor));
+                if (value != 0)
+                {
+                    _innerDiametrTor = value;
+                    OnPropertyChanged(nameof(InnerDiametrTor));
+                }
+                else _innerDiametrTor = 20;
             }
         }
         public double WireDiameter
@@ -79,14 +95,81 @@ namespace WpfApp1.ViewModels
             get => _wireDiameter;
             set
             {
-                _wireDiameter = value;
-                OnPropertyChanged(nameof(WireDiameter));
+                if (value != 0)
+                {
+                    _wireDiameter = value;
+                    OnPropertyChanged(nameof(WireDiameter));
+                }
+                else _wireDiameter = 0.08;
             }
         }
 
        public SerialPort SerialPort { get; set; }
 
+        private DelegateCommand _calcStepCommand;
+        public DelegateCommand CalcStepCommand
+        {
+            get
+            {
+                return _calcStepCommand ?? (_calcStepCommand = new DelegateCommand(obj =>
+                {
+                    CalculateStep();
+                }));
+            }
+        }
+        private DelegateCommand _calcStepByTurnsCommand;
+        public DelegateCommand CalcStepByTurnsCommand
+        {
+            get
+            {
+                return _calcStepByTurnsCommand ?? (_calcStepByTurnsCommand = new DelegateCommand(obj =>
+                {
+                    CalculateStepByTurns();
+                }));
+            }
+        }
 
+       
 
+        private DelegateCommand _setWorkStepCommand;
+        public DelegateCommand SetWorkStepCommand
+        {
+            get
+            {
+                return _setWorkStepCommand ?? (_setWorkStepCommand = new DelegateCommand(obj =>
+                {
+                    if (WindingStep != 0 && SerialPort != null)
+                    {
+                        SetWorkStep();
+                        CorentStep = WindingStep;
+                    }
+                }));
+            }
+        }
+
+        private void SetWorkStep()
+        {
+            if (SerialPort != null && SerialPort.IsOpen)
+            {
+                string command = $"STEPS:{WindingStep}\n"; // \n — конец строки для Arduino
+                SerialPort.Write(command);
+            }
+        }
+
+        private void CalculateStep()
+        {
+            _stepsCalculate = new StepsCalculateTor(WireDiameter, 3200, InnerDiametrTor);
+            var s = _stepsCalculate.CalculateSteps();
+            var k = s * KoefStep;
+            WindingStep = Convert.ToInt32(Math.Round(k, 0));
+        }
+
+        private void CalculateStepByTurns()
+        {
+            _stepsCalculate = new StepsCalculateTor(WireDiameter, 3200, InnerDiametrTor);
+            var s = _stepsCalculate.CalculateStepsByTurns(CountTurns);
+          
+            WindingStep = s;
+        }
     }
 }

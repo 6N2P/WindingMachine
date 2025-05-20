@@ -10,7 +10,7 @@
         
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Winding machine" Height="450" Width="800"
+        Title="Winding machine" Height="650" Width="850"
         Background="#2d3142">
     <Window.Resources>
         <ObjectDataProvider ObjectType="{x:Type ports:SerialPort}" 

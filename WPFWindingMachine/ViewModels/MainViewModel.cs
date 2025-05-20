@@ -6,6 +6,7 @@ using WpfApp1.Views;
 
 namespace WpfApp1.ViewModels
 {
+   
     public class MainViewModel : ViewModelBase
     {
         public MainViewModel() 
@@ -17,11 +18,12 @@ namespace WpfApp1.ViewModels
             IsRotateLeft = true;
             IsRotateRight = true;
             IsEnabledActivCBPorts = true;
-
-            WindingUC = new WindingUserControl();
+            _windingUCvm = new WindingUCViewModel();
+            WindingUC = new WindingUserControl(_windingUCvm);
         }
 
-   
+
+        private WindingUCViewModel _windingUCvm;
 
         private SerialPort _serialPort = new SerialPort();
         private int _stepsFreeMove;
@@ -154,7 +156,7 @@ namespace WpfApp1.ViewModels
             {
                 return _setStepsFreeMoveCommand ?? (_setStepsFreeMoveCommand = new DelegateCommand(obj =>
                 {
-                    if (_serialPort.IsOpen)
+                    if (_serialPort != null && _serialPort.IsOpen)
                     {
                        // string command = $"STEPS:{StepsFreeMove}\n"; // \n — конец строки для Arduino
                         string command = $"STEPS_FREE:{StepsFreeMove}\n"; // \n — конец строки для Arduino
@@ -170,7 +172,7 @@ namespace WpfApp1.ViewModels
             {
                 return _muveFreeMotorCommand ?? (_muveFreeMotorCommand = new DelegateCommand(obj =>
                 {
-                    if (_serialPort.IsOpen)
+                    if (_serialPort != null && _serialPort.IsOpen)
                     {
                         string command = "MUVE_FREE\n";
                         _serialPort.Write(command);
@@ -185,7 +187,7 @@ namespace WpfApp1.ViewModels
             {
                 return _set1DirectionMotorCommand ?? (_set1DirectionMotorCommand = new DelegateCommand(obj =>
                 {
-                    if (_serialPort.IsOpen)
+                    if (_serialPort != null && _serialPort.IsOpen)
                     {
                         _serialPort.Write("B\n");
                         IsRotateRight = false;
@@ -201,7 +203,7 @@ namespace WpfApp1.ViewModels
             {
                 return _set2DirectionMotorCommand ?? (_set2DirectionMotorCommand = new DelegateCommand(obj =>
                 {
-                    if (_serialPort.IsOpen)
+                    if (_serialPort != null && _serialPort.IsOpen)
                     {
                         _serialPort.Write("F\n");
                         IsRotateRight = true;
@@ -251,8 +253,9 @@ namespace WpfApp1.ViewModels
                 IsEnabledActivCBPorts = false;
                 ConnectionFlag = "Отключиться";
 
+
                 if (WindingUC != null)
-                    WindingUC.SerialPort = _serialPort;
+                    _windingUCvm.SerialPort = _serialPort;
             }
             catch (Exception ex)
             {

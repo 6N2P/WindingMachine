@@ -6,15 +6,55 @@ using System.Threading.Tasks;
 
 namespace WindingModels
 {
-    public class StepsCalculateTor : StepsCalculateBase
+    public class StepsCalculateTor : ICalculateSteps
     {
-        public StepsCalculateTor(double wireDiameter, int stepsMotor, double innerDiametr) : base(wireDiameter, stepsMotor, innerDiametr)
+        public StepsCalculateTor(double wireDiameter, int stepsMotor, double innerDiametr)
         {
+            WireDiameter = wireDiameter;
+            StepsMotor = stepsMotor;
+            InnerDiametr = innerDiametr;
         }
 
-        public override int CalculateSteps()
+        /// <summary>
+        /// Диаметр проволки
+        /// </summary>
+        public double WireDiameter { get; set; }
+
+        /// <summary>
+        /// Кол-во шагов одного круга шагового двигателя
+        /// </summary>
+        public int StepsMotor { get; set; }
+
+        /// <summary>
+        /// Внутрений диаметр тора
+        /// </summary>
+        public double InnerDiametr { get; set; }
+
+        public  int CalculateSteps()
         {
-            throw new NotImplementedException();
+            if (InnerDiametr == 0 || WireDiameter == 0 || StepsMotor == 0) return 0;
+            //Вычисляю длину дуги
+            var L = Math.PI * InnerDiametr;
+            //Сколько витков помещается в окружности
+            var n = Math.Round(L / WireDiameter, 1);
+            //Округляю до цулого числа
+
+            //Сопостовляю круг мотора с кругом витков
+            //Нахожу сколько шагов один виток
+            double d = StepsMotor / n;
+
+            var result = Convert.ToInt32(Math.Round(d,0));
+            return result;
+
+        }
+
+        public int CalculateStepsByTurns(int countTurns)
+        {
+            if(StepsMotor == 0 || countTurns == 0) return 0;
+            double d = StepsMotor / countTurns;
+
+            var result = Convert.ToInt32(Math.Round(d, 0));
+            return result;
         }
     }
 }

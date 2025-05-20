@@ -9,15 +9,11 @@ namespace WpfApp1.Views
     /// </summary>
     public partial class WindingUserControl : UserControl
     {
-        public WindingUserControl()
+        public WindingUserControl(WindingUCViewModel _vm)
         {
-            InitializeComponent();
-            _vm = new WindingUCViewModel();
-            _vm.SerialPort = SerialPort;
+            InitializeComponent();            
             DataContext =_vm ;
         }
 
-        private WindingUCViewModel _vm;
-        public SerialPort SerialPort { get; set; }
     }
 }
