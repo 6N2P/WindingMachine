@@ -21,6 +21,7 @@
                 BorderBrush="Black"
                 Background="#4F5D75"
                 CornerRadius="4"
+                Grid.RowSpan="2"
                 Margin="3">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -28,6 +29,8 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
@@ -73,7 +76,7 @@
 
                 <TextBlock Grid.Column="0"
                            Grid.Row="3"
-                           Text="Поправка на шаг:"
+                           Text="Внешний диаметр тора:"
                            Style="{StaticResource MyTextLight}"
                            HorizontalAlignment="Right"/>
                 <TextBox Grid.Column="1"
@@ -82,15 +85,41 @@
                          Width="50"
                          HorizontalAlignment="Left"
                          Margin="5,0"
-                         Text="{Binding KoefStep}"/>
+                         Text="{Binding OuterDiametrTor}"/>
+
+                <TextBlock Grid.Column="0"
+                           Grid.Row="4"
+                           Text="Диаметр вудущего ролика:"
+                           Style="{StaticResource MyTextLight}"
+                           HorizontalAlignment="Right"/>
+                <TextBox Grid.Column="1"
+                         Grid.Row="4"
+                         Height="20"
+                         Width="50"
+                         HorizontalAlignment="Left"
+                         Margin="5,0"
+                         Text="{Binding DiameterOfDriveRoller}"/>
 
                 <TextBlock Grid.Column="0"
                            Grid.Row="5"
-                           Text="Шаг намотки:"
+                           Text="Поправка на шаг:"
                            Style="{StaticResource MyTextLight}"
                            HorizontalAlignment="Right"/>
                 <TextBox Grid.Column="1"
                          Grid.Row="5"
+                         Height="20"
+                         Width="50"
+                         HorizontalAlignment="Left"
+                         Margin="5,0"
+                         Text="{Binding KoefStep}"/>
+
+                <TextBlock Grid.Column="0"
+                           Grid.Row="7"
+                           Text="Шаг намотки:"
+                           Style="{StaticResource MyTextLight}"
+                           HorizontalAlignment="Right"/>
+                <TextBox Grid.Column="1"
+                         Grid.Row="7"
                          Height="20"
                          Width="50"
                          HorizontalAlignment="Left"
@@ -100,19 +129,19 @@
 
 
                 <TextBlock Grid.Column="0"
-                           Grid.Row="4"
+                           Grid.Row="6"
                            Text="Кол-во витков:"
                            Style="{StaticResource MyTextLight}"
                            HorizontalAlignment="Right"/>
                 <TextBox Grid.Column="1"
-                         Grid.Row="4"
+                         Grid.Row="6"
                          Height="20"
                          Width="50"
                          HorizontalAlignment="Left"
                          Margin="5,0"
                          Text="{Binding CountTurns}"/>
                 
-                <StackPanel Grid.Row="6"
+                <StackPanel Grid.Row="8"
                             Grid.ColumnSpan="2"
                             Orientation="Horizontal"
                             HorizontalAlignment="Center">
@@ -135,7 +164,7 @@
                         <Icon:PackIconMaterial Kind="CalculatorVariantOutline" Width="15" Height="15"/>
                     </Button>
                 </StackPanel>
-                <StackPanel Grid.Row="7"
+                <StackPanel Grid.Row="9"
                             Grid.ColumnSpan="2"
                             Orientation="Horizontal"
                             HorizontalAlignment="Center"
@@ -149,6 +178,7 @@
         </Border>
 
         <Border Grid.Row="1"
+                Grid.Column="1"
                 BorderThickness="1"
                 BorderBrush="Black"
                 Background="#4F5D75"

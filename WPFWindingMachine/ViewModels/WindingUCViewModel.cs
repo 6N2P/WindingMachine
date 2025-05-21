@@ -12,6 +12,8 @@ namespace WpfApp1.ViewModels
         {
             WireDiameter = 0.08;
             InnerDiametrTor = 50;
+            OuterDiametrTor = 78.5;
+            DiameterOfDriveRoller = 32.5;
             KoefStep = 1;
 
             CountTurns = 2;
@@ -26,8 +28,27 @@ namespace WpfApp1.ViewModels
         private int _corentStep;
         private ObservableCollection<WindingData> _windingList;
         private int _countTurns;
+        private double _outerDiametrTor;
+        private double _diameterOfDriveRoller;
 
-
+        public double DiameterOfDriveRoller
+        {
+            get => _diameterOfDriveRoller;
+            set
+            {
+                _diameterOfDriveRoller = value;
+                OnPropertyChanged(nameof(DiameterOfDriveRoller));
+            }
+        }
+        public double OuterDiametrTor
+        {
+            get => _outerDiametrTor;
+            set
+            {
+                _outerDiametrTor = value;
+                OnPropertyChanged(nameof(OuterDiametrTor));
+            }
+        }
         public int CountTurns
         {
             get=>_countTurns;
@@ -158,7 +179,7 @@ namespace WpfApp1.ViewModels
 
         private void CalculateStep()
         {
-            _stepsCalculate = new StepsCalculateTor(WireDiameter, 3200, InnerDiametrTor);
+            _stepsCalculate = new StepsCalculateTor(WireDiameter, 3200, InnerDiametrTor,OuterDiametrTor,DiameterOfDriveRoller);
             var s = _stepsCalculate.CalculateSteps();
             var k = s * KoefStep;
             WindingStep = Convert.ToInt32(Math.Round(k, 0));
@@ -166,7 +187,7 @@ namespace WpfApp1.ViewModels
 
         private void CalculateStepByTurns()
         {
-            _stepsCalculate = new StepsCalculateTor(WireDiameter, 3200, InnerDiametrTor);
+            _stepsCalculate = new StepsCalculateTor(WireDiameter, 3200, InnerDiametrTor, OuterDiametrTor, DiameterOfDriveRoller);
             var s = _stepsCalculate.CalculateStepsByTurns(CountTurns);
           
             WindingStep = s;
