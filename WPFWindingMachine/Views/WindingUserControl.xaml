@@ -12,6 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="250" Width="170"/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="250"/>
@@ -187,7 +188,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
 
                 <DataGrid Margin="3"
@@ -204,7 +205,8 @@
                 <StackPanel Grid.Row="1"
                             Orientation="Horizontal"
                             VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
+                            HorizontalAlignment="Center"
+                            Margin="3">
                     <Button ToolTip="Создать строку"
                             Style="{StaticResource IconButon1}">
                         <Icon:PackIconMaterial Kind="Creation" Width="15" Height="15"/>
@@ -219,6 +221,76 @@
                     </Button>
                 </StackPanel>
             </Grid>
+        </Border>
+        <Border Grid.Column="1"
+                Grid.Row="0"
+                BorderThickness="1"
+                BorderBrush="Black"
+                Background="#4F5D75"
+                CornerRadius="4"
+                Margin="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="1"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="60"
+                           Foreground="#EF8354"
+                           Text="123"/>
+
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="3">
+                    
+                    <Button Style="{StaticResource IconButon1}"
+                            ToolTip="Считать витки">
+                        <Icon:PackIconMaterial Kind="Play" Width="15" Height="15"/>
+                    </Button>
+                    
+                    <Button Style="{StaticResource IconButon1}"
+                            ToolTip="Не считать витки">
+                        <Icon:PackIconMaterial Kind="Stop" Width="15" Height="15"/>
+                    </Button>
+                    
+                    <Button Style="{StaticResource IconButon1}"
+                            ToolTip="Получить текущий виток с ардуино">
+                        <Icon:PackIconMaterial Kind="ChevronDoubleDown" Width="15" Height="15"/>
+                    </Button>
+                    
+                    <Button Style="{StaticResource IconButon1}"
+                            ToolTip="Задать текущий виток с ардуино">
+                        <Icon:PackIconMaterial Kind="ChevronDoubleUp" Width="15" Height="15"/>
+                    </Button>
+                    <TextBox Width="70"
+                             Margin="5,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="2"
+                Grid.Row="0"
+                BorderThickness="1"
+                BorderBrush="Black"
+                Background="#4F5D75"
+                CornerRadius="4"
+                Margin="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Расчет длины провода"
+                           Style="{StaticResource MyTextLight}"
+                           FontSize="16"/>
+            </Grid>
+            
         </Border>
     </Grid>
 </UserControl>

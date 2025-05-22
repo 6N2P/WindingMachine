@@ -20,6 +20,7 @@ namespace WpfApp1.ViewModels
         }
 
 
+        #region Fields
         private ICalculateSteps _stepsCalculate;
         private double _wireDiameter; //диамет провода
         private double _innerDiametrTor;
@@ -29,8 +30,10 @@ namespace WpfApp1.ViewModels
         private ObservableCollection<WindingData> _windingList;
         private int _countTurns;
         private double _outerDiametrTor;
-        private double _diameterOfDriveRoller;
+        private double _diameterOfDriveRoller; 
+        #endregion
 
+        #region Propertys
         public double DiameterOfDriveRoller
         {
             get => _diameterOfDriveRoller;
@@ -51,7 +54,7 @@ namespace WpfApp1.ViewModels
         }
         public int CountTurns
         {
-            get=>_countTurns;
+            get => _countTurns;
             set
             {
                 _countTurns = value;
@@ -67,7 +70,6 @@ namespace WpfApp1.ViewModels
                 OnPropertyChanged(nameof(WindingList));
             }
         }
-
         public int CorentStep
         {
             get => _corentStep;
@@ -77,7 +79,6 @@ namespace WpfApp1.ViewModels
                 OnPropertyChanged(nameof(CorentStep));
             }
         }
-
         public double KoefStep
         {
             get => _koefStep;
@@ -87,7 +88,6 @@ namespace WpfApp1.ViewModels
                 OnPropertyChanged(nameof(KoefStep));
             }
         }
-
         public int WindingStep
         {
             get => _windingStep;
@@ -97,7 +97,6 @@ namespace WpfApp1.ViewModels
                 OnPropertyChanged(nameof(WindingStep));
             }
         }
-
         public double InnerDiametrTor
         {
             get => _innerDiametrTor;
@@ -125,8 +124,10 @@ namespace WpfApp1.ViewModels
             }
         }
 
-       public SerialPort SerialPort { get; set; }
+        public SerialPort SerialPort { get; set; } 
+        #endregion Propertys
 
+        #region Commands
         private DelegateCommand _calcStepCommand;
         public DelegateCommand CalcStepCommand
         {
@@ -150,8 +151,6 @@ namespace WpfApp1.ViewModels
             }
         }
 
-       
-
         private DelegateCommand _setWorkStepCommand;
         public DelegateCommand SetWorkStepCommand
         {
@@ -167,6 +166,7 @@ namespace WpfApp1.ViewModels
                 }));
             }
         }
+        #endregion Commands
 
         private void SetWorkStep()
         {

@@ -38,7 +38,8 @@ namespace WindingModels
 
         public  int CalculateSteps()
         {
-            if (InnerDiametr == 0 || WireDiameter == 0 || StepsMotor == 0 || OuterDiametrTor == 0 || DiameterOfDriveRoller ==0) return 0;
+            if (InnerDiametr == 0 || WireDiameter == 0 || StepsMotor == 0 
+                || OuterDiametrTor == 0 || DiameterOfDriveRoller ==0) return 0;
             //Вычисляю длину дуги
             var L = Math.PI * InnerDiametr;
 
@@ -47,13 +48,10 @@ namespace WindingModels
 
             //Сколько витков помещается в окружности
             var n = Math.Round(L / WireDiameter, 1);
-            //Округляю до цулого числа
 
-            //Сопостовляю круг мотора с кругом витков
             //Нахожу сколько шагов один виток
-            //double d = StepsMotor  / n;
-            double d = StepsMotor * peredatOtn / n;
-            var result = Convert.ToInt32(Math.Round(d, 0));
+            double oneStep = StepsMotor * peredatOtn / n;
+            var result = Convert.ToInt32(Math.Round(oneStep, 0));
             return result;
 
         }

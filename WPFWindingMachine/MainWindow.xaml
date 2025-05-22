@@ -83,14 +83,14 @@
                     <StackPanel Orientation="Horizontal"
                                  HorizontalAlignment="Center"
                                 Margin="5">
-                        <Button Style="{StaticResource IconButon1}"
+                        <Button Style="{StaticResource IconButon2}"
                                  ToolTip="Двигать по часовой стрелке"
                                  Command="{Binding Set1DirectionMotorCommand}"
                                 IsEnabled="{Binding IsRotateRight}">
                             <Icon:PackIconMaterial Kind="RotateRight" Width="15" Height="15"/>
                         </Button>
 
-                        <Button Style="{StaticResource IconButon1}"   
+                        <Button Style="{StaticResource IconButon2}"   
                                 ToolTip="Двигать против часовой стрелке"
                                 Command="{Binding Set2DirectionMotorCommand}"
                                 IsEnabled="{Binding IsRotateLeft}">
