@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO.Ports;
 using WindingModels;
+using WorkerWithSerialPort;
 
 
 namespace WpfApp1.ViewModels
@@ -17,6 +18,7 @@ namespace WpfApp1.ViewModels
             KoefStep = 1;
 
             CountTurns = 2;
+            _cncCommands = new SPWorkerWindingMachine(SerialPort);
         }
 
 
@@ -30,7 +32,8 @@ namespace WpfApp1.ViewModels
         private ObservableCollection<WindingData> _windingList;
         private int _countTurns;
         private double _outerDiametrTor;
-        private double _diameterOfDriveRoller; 
+        private double _diameterOfDriveRoller;
+        private ICNCCommands _cncCommands;
         #endregion
 
         #region Propertys
@@ -170,11 +173,12 @@ namespace WpfApp1.ViewModels
 
         private void SetWorkStep()
         {
-            if (SerialPort != null && SerialPort.IsOpen)
-            {
-                string command = $"STEPS:{WindingStep}\n"; // \n — конец строки для Arduino
-                SerialPort.Write(command);
-            }
+            //if (SerialPort != null && SerialPort.IsOpen)
+            //{
+            //    string command = $"STEPS:{WindingStep}\n"; // \n — конец строки для Arduino
+            //    SerialPort.Write(command);
+            //}
+            _cncCommands.SetStepWorkMuve(WindingStep);
         }
 
         private void CalculateStep()

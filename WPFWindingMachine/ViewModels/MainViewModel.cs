@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Windows;
+using WorkerWithSerialPort;
 using WpfApp1.Views;
 
 namespace WpfApp1.ViewModels
@@ -20,11 +21,12 @@ namespace WpfApp1.ViewModels
             IsEnabledActivCBPorts = true;
             _windingUCvm = new WindingUCViewModel();
             WindingUC = new WindingUserControl(_windingUCvm);
+            _cncCommands = new SPWorkerWindingMachine(_serialPort);
         }
 
 
         private WindingUCViewModel _windingUCvm;
-
+        private ICNCCommands _cncCommands;
         private SerialPort _serialPort = new SerialPort();
         private int _stepsFreeMove;
 
@@ -156,12 +158,12 @@ namespace WpfApp1.ViewModels
             {
                 return _setStepsFreeMoveCommand ?? (_setStepsFreeMoveCommand = new DelegateCommand(obj =>
                 {
-                    if (_serialPort != null && _serialPort.IsOpen)
-                    {
-                       // string command = $"STEPS:{StepsFreeMove}\n"; // \n — конец строки для Arduino
-                        string command = $"STEPS_FREE:{StepsFreeMove}\n"; // \n — конец строки для Arduino
-                        _serialPort.Write(command);
-                    }
+                   // if (_serialPort != null && _serialPort.IsOpen)
+                   // {
+                        //string command = $"STEPS_FREE:{StepsFreeMove}\n"; // \n — конец строки для Arduino
+                        //_serialPort.Write(command);                        
+                   // }
+                    _cncCommands.SetStepFreeMuve(StepsFreeMove);
                 }));
             }
         }
@@ -172,11 +174,12 @@ namespace WpfApp1.ViewModels
             {
                 return _muveFreeMotorCommand ?? (_muveFreeMotorCommand = new DelegateCommand(obj =>
                 {
-                    if (_serialPort != null && _serialPort.IsOpen)
-                    {
-                        string command = "MUVE_FREE\n";
-                        _serialPort.Write(command);
-                    }
+                    //if (_serialPort != null && _serialPort.IsOpen)
+                    //{
+                    //    string command = "MUVE_FREE\n";
+                    //    _serialPort.Write(command);
+                    //}
+                    _cncCommands.MuveFreeMotor();
                 }));
             }
         }
@@ -189,7 +192,7 @@ namespace WpfApp1.ViewModels
                 {
                     if (_serialPort != null && _serialPort.IsOpen)
                     {
-                        _serialPort.Write("B\n");
+                        _cncCommands.SetDirectionMotorRight();
                         IsRotateRight = false;
                         IsRotateLeft = true;
                     }
@@ -205,7 +208,8 @@ namespace WpfApp1.ViewModels
                 {
                     if (_serialPort != null && _serialPort.IsOpen)
                     {
-                        _serialPort.Write("F\n");
+                      //  _serialPort.Write("F\n");
+                      _cncCommands.SetDirectionMotorLeft();
                         IsRotateRight = true;
                         IsRotateLeft = false;
                     }

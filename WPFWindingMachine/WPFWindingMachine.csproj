@@ -227,6 +227,10 @@
       <Project>{2b6be6ac-c1d0-44b3-accb-b6d2cf2ab3cb}</Project>
       <Name>WindingModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WorkerWithSerialPort\WorkerWithSerialPort.csproj">
+      <Project>{60fd963b-5cef-4024-a379-02fb3a339bc2}</Project>
+      <Name>WorkerWithSerialPort</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
