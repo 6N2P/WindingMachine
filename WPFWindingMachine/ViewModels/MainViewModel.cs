@@ -22,6 +22,8 @@ namespace WpfApp1.ViewModels
             _windingUCvm = new WindingUCViewModel();
             WindingUC = new WindingUserControl(_windingUCvm);
             _cncCommands = new SPWorkerWindingMachine(_serialPort);
+            ContentStartButton = "Cтарт";
+            _isStartMainMotor = false;
         }
 
 
@@ -29,7 +31,7 @@ namespace WpfApp1.ViewModels
         private ICNCCommands _cncCommands;
         private SerialPort _serialPort = new SerialPort();
         private int _stepsFreeMove;
-
+        private bool _isStartMainMotor;
         private string _textCountWinding;
 
         private string _selectedPort;       
@@ -39,9 +41,19 @@ namespace WpfApp1.ViewModels
         private bool _isEnabledactivCBPorts;
         private bool _isRotateLeft;
         private bool _isRotateRight;
+        private string _contentStartButton;
 
         #region Propertys
 
+        public string ContentStartButton
+        {
+            get=> _contentStartButton;
+            set
+            {
+                _contentStartButton = value;
+                OnPropertyChanged(nameof(ContentStartButton));
+            }
+        }
         private WindingUserControl _windingUC;
            public WindingUserControl WindingUC
         {
@@ -212,6 +224,26 @@ namespace WpfApp1.ViewModels
                       _cncCommands.SetDirectionMotorLeft();
                         IsRotateRight = true;
                         IsRotateLeft = false;
+                    }
+                }));
+            }
+        }
+        private DelegateCommand _mainMortorCommand;
+        public DelegateCommand MainMortorCommand
+        {
+            get
+            {
+                return _mainMortorCommand ?? (_mainMortorCommand = new DelegateCommand(obj =>
+                {
+                    if(!_isStartMainMotor )
+                    {
+                        ContentStartButton = "Стоп";
+                        _isStartMainMotor = true;
+                    }
+                    else
+                    {
+                        ContentStartButton = "Старт";
+                        _isStartMainMotor = false;
                     }
                 }));
             }
